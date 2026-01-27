@@ -288,13 +288,11 @@ const Report = () => {
           continue;
         }
 
-        const { data: urlData } = supabase.storage
-          .from("evidence")
-          .getPublicUrl(fileName);
-
+        // Store only the file path, not a public URL
+        // Signed URLs will be generated on-demand when viewing evidence
         await supabase.from("evidence").insert({
           complaint_id: complaint.id,
-          file_url: urlData.publicUrl,
+          file_url: fileName, // Store the path, not the public URL
           file_name: evidenceFile.file.name,
           file_type: evidenceFile.file.type,
           file_size: evidenceFile.file.size,
