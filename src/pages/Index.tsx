@@ -1,19 +1,10 @@
-import { Search, Shield, FileText, Users, AlertTriangle, CheckCircle } from "lucide-react";
+import { Search, Shield, FileText, Users, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HeroSection from "@/components/HeroSection";
 
 const Index = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -44,50 +35,8 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10" />
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-3xl mx-auto text-center animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Shield className="h-4 w-4" />
-              Protecting Nigerian Consumers
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">
-              Check Before You Pay.{" "}
-              <span className="text-primary">Protect Yourself.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 text-balance">
-              BadVendor is Nigeria's verified misconduct registry. Search vendors before transacting 
-              and report fraud to protect others in our community.
-            </p>
-
-            {/* Search Bar */}
-            <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <div className="relative flex-1">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Search by phone number, name, or bank account..."
-                    className="pl-12 h-14 text-base bg-card border-border"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <Button type="submit" size="lg" className="h-14 px-8">
-                  Search Vendor
-                </Button>
-              </div>
-            </form>
-
-            <p className="text-sm text-muted-foreground mt-4">
-              Over <span className="font-semibold text-foreground">2,500+</span> verified reports 
-              protecting Nigerian consumers
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section with animated background */}
+      <HeroSection />
 
       {/* How It Works */}
       <section id="how-it-works" className="py-20 bg-card border-y border-border">
