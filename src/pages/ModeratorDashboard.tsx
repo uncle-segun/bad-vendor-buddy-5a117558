@@ -25,6 +25,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import { EvidenceViewer } from "@/components/EvidenceViewer";
 
 type Complaint = Tables<"complaints">;
 type Vendor = Tables<"vendors">;
@@ -444,27 +445,9 @@ const ModeratorDashboard = () => {
                   <p className="text-foreground mt-1">{selectedComplaint.description}</p>
                 </div>
 
-                {/* Evidence */}
+                {/* Evidence - Using secure signed URLs */}
                 {selectedComplaint.evidence && selectedComplaint.evidence.length > 0 && (
-                  <div>
-                    <span className="text-sm text-muted-foreground mb-2 block">
-                      Evidence ({selectedComplaint.evidence.length} files)
-                    </span>
-                    <div className="grid grid-cols-3 gap-2">
-                      {selectedComplaint.evidence.map((file) => (
-                        <a
-                          key={file.id}
-                          href={file.file_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-muted rounded p-2 text-center hover:bg-muted/80 transition-colors"
-                        >
-                          <FileText className="h-8 w-8 mx-auto mb-1 text-muted-foreground" />
-                          <p className="text-xs text-foreground truncate">{file.file_name}</p>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
+                  <EvidenceViewer evidence={selectedComplaint.evidence} />
                 )}
 
                 {/* Review Notes */}
