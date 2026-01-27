@@ -1,12 +1,306 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Search, Shield, FileText, Users, AlertTriangle, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Shield className="h-8 w-8 text-primary" />
+            <span className="text-xl font-bold text-foreground">BadVendor</span>
+          </div>
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
+              How It Works
+            </a>
+            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
+              About
+            </a>
+            <Button variant="outline" onClick={() => navigate("/auth")}>
+              Sign In
+            </Button>
+            <Button onClick={() => navigate("/report")}>
+              Report a Vendor
+            </Button>
+          </nav>
+          <Button variant="outline" size="icon" className="md:hidden">
+            <Search className="h-5 w-5" />
+          </Button>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10" />
+        <div className="container mx-auto px-4 relative">
+          <div className="max-w-3xl mx-auto text-center animate-fade-in">
+            <div className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <Shield className="h-4 w-4" />
+              Protecting Nigerian Consumers
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">
+              Check Before You Pay.{" "}
+              <span className="text-primary">Protect Yourself.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 text-balance">
+              BadVendor is Nigeria's verified misconduct registry. Search vendors before transacting 
+              and report fraud to protect others in our community.
+            </p>
+
+            {/* Search Bar */}
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search by phone number, name, or bank account..."
+                    className="pl-12 h-14 text-base bg-card border-border"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                <Button type="submit" size="lg" className="h-14 px-8">
+                  Search Vendor
+                </Button>
+              </div>
+            </form>
+
+            <p className="text-sm text-muted-foreground mt-4">
+              Over <span className="font-semibold text-foreground">2,500+</span> verified reports 
+              protecting Nigerian consumers
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section id="how-it-works" className="py-20 bg-card border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              How BadVendor Works
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Our verification process ensures only legitimate complaints are published, 
+              protecting both consumers and honest vendors.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="text-center p-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Search className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">1. Search First</h3>
+              <p className="text-muted-foreground">
+                Before any transaction, search the vendor's phone number, name, or bank account 
+                to check for verified complaints.
+              </p>
+            </div>
+
+            <div className="text-center p-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <div className="w-16 h-16 bg-severity-risky/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <FileText className="h-8 w-8 text-severity-risky" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">2. Report Fraud</h3>
+              <p className="text-muted-foreground">
+                If you've been defrauded, submit a report with evidence. Our team verifies 
+                every complaint before publication.
+              </p>
+            </div>
+
+            <div className="text-center p-6 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Users className="h-8 w-8 text-success" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">3. Protect Others</h3>
+              <p className="text-muted-foreground">
+                Once 3+ complaints are verified, the vendor is listed publicly—helping 
+                other Nigerians avoid the same fate.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Severity Levels */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Understanding Severity Levels
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Vendors are categorized based on the nature and severity of verified complaints.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="border border-severity-critical/30 bg-severity-critical/5 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-severity-critical rounded-lg flex items-center justify-center">
+                  <AlertTriangle className="h-5 w-5 text-severity-critical-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Critical</h3>
+              </div>
+              <p className="text-muted-foreground mb-4">
+                Severe cases involving significant financial loss, identity theft, or 
+                criminal activity. High risk of harm.
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-2">
+                <li>• Money taken, no goods/services</li>
+                <li>• Identity theft or fraud</li>
+                <li>• Fake products with safety risks</li>
+              </ul>
+            </div>
+
+            <div className="border border-severity-risky/30 bg-severity-risky/5 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-severity-risky rounded-lg flex items-center justify-center">
+                  <AlertTriangle className="h-5 w-5 text-severity-risky-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Risky</h3>
+              </div>
+              <p className="text-muted-foreground mb-4">
+                Serious issues with partial delivery or significant deception. 
+                Exercise caution if transacting.
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-2">
+                <li>• Partial delivery of goods</li>
+                <li>• Significantly misrepresented items</li>
+                <li>• Unresponsive after payment</li>
+              </ul>
+            </div>
+
+            <div className="border border-severity-unreliable/30 bg-severity-unreliable/5 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-severity-unreliable rounded-lg flex items-center justify-center">
+                  <AlertTriangle className="h-5 w-5 text-severity-unreliable-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Unreliable</h3>
+              </div>
+              <p className="text-muted-foreground mb-4">
+                Pattern of poor service or minor issues. May be acceptable for 
+                low-risk transactions.
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-2">
+                <li>• Excessive delays</li>
+                <li>• Minor quality issues</li>
+                <li>• Poor communication</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Indicators */}
+      <section className="py-20 bg-card border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">2,500+</div>
+              <div className="text-muted-foreground">Verified Reports</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">850+</div>
+              <div className="text-muted-foreground">Listed Vendors</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">₦45M+</div>
+              <div className="text-muted-foreground">Fraud Documented</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">15K+</div>
+              <div className="text-muted-foreground">Monthly Searches</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              Been Defrauded? Report It.
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Your report could save someone else from the same experience. 
+              All reports are verified and reporter identities are always protected.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" onClick={() => navigate("/report")}>
+                <FileText className="mr-2 h-5 w-5" />
+                Submit a Report
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => navigate("/auth")}>
+                Create Account
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="about" className="bg-foreground text-background py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Shield className="h-6 w-6" />
+                <span className="text-lg font-bold">BadVendor</span>
+              </div>
+              <p className="text-muted-foreground text-sm">
+                Nigeria's verified misconduct registry. Protecting consumers 
+                through transparency and accountability.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="/search" className="hover:text-background transition-colors">Search Vendors</a></li>
+                <li><a href="/report" className="hover:text-background transition-colors">Submit Report</a></li>
+                <li><a href="/auth" className="hover:text-background transition-colors">Sign In</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Resources</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-background transition-colors">How It Works</a></li>
+                <li><a href="#" className="hover:text-background transition-colors">FAQs</a></li>
+                <li><a href="#" className="hover:text-background transition-colors">Contact Us</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-background transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-background transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-background transition-colors">Report Guidelines</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-muted-foreground/20 pt-8 text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} BadVendor. All rights reserved. Built for Nigeria 🇳🇬
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
