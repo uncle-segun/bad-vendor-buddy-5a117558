@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Shield, Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Shield, Mail, Lock, Eye, EyeOff, ArrowLeft, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,18 +8,26 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
-const authSchema = z.object({
+const loginSchema = z.object({
+  identifier: z.string().trim().min(1, { message: "Please enter your email or username" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+});
+
+const signupSchema = z.object({
   email: z.string().trim().email({ message: "Please enter a valid email address" }),
+  displayName: z.string().trim().min(2, { message: "Display name must be at least 2 characters" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
 });
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [identifier, setIdentifier] = useState(""); // email or username for login
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ identifier?: string; email?: string; displayName?: string; password?: string }>({});
   
   const navigate = useNavigate();
   const { user, signIn, signUp } = useAuth();
@@ -33,15 +41,29 @@ const Auth = () => {
   }, [user, navigate]);
 
   const validateForm = () => {
-    const result = authSchema.safeParse({ email, password });
-    if (!result.success) {
-      const fieldErrors: { email?: string; password?: string } = {};
-      result.error.errors.forEach((err) => {
-        if (err.path[0] === "email") fieldErrors.email = err.message;
-        if (err.path[0] === "password") fieldErrors.password = err.message;
-      });
-      setErrors(fieldErrors);
-      return false;
+    if (isLogin) {
+      const result = loginSchema.safeParse({ identifier, password });
+      if (!result.success) {
+        const fieldErrors: { identifier?: string; password?: string } = {};
+        result.error.errors.forEach((err) => {
+          if (err.path[0] === "identifier") fieldErrors.identifier = err.message;
+          if (err.path[0] === "password") fieldErrors.password = err.message;
+        });
+        setErrors(fieldErrors);
+        return false;
+      }
+    } else {
+      const result = signupSchema.safeParse({ email, displayName, password });
+      if (!result.success) {
+        const fieldErrors: { email?: string; displayName?: string; password?: string } = {};
+        result.error.errors.forEach((err) => {
+          if (err.path[0] === "email") fieldErrors.email = err.message;
+          if (err.path[0] === "displayName") fieldErrors.displayName = err.message;
+          if (err.path[0] === "password") fieldErrors.password = err.message;
+        });
+        setErrors(fieldErrors);
+        return false;
+      }
     }
     setErrors({});
     return true;
@@ -56,7 +78,7 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { error } = await signIn(email, password);
+        const { error } = await signIn(identifier, password);
         if (error) {
           if (error.message.includes("Invalid login credentials")) {
             toast({
@@ -79,7 +101,7 @@ const Auth = () => {
           navigate("/");
         }
       } else {
-        const { error } = await signUp(email, password);
+        const { error } = await signUp(email, password, displayName);
         if (error) {
           if (error.message.includes("already registered")) {
             toast({
@@ -148,24 +170,66 @@ const Auth = () => {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    className={`pl-10 h-12 ${errors.email ? "border-destructive" : ""}`}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={isLoading}
-                  />
+              {isLogin ? (
+                <div className="space-y-2">
+                  <Label htmlFor="identifier">Email or Username</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input
+                      id="identifier"
+                      type="text"
+                      placeholder="you@example.com or username"
+                      className={`pl-10 h-12 ${errors.identifier ? "border-destructive" : ""}`}
+                      value={identifier}
+                      onChange={(e) => setIdentifier(e.target.value)}
+                      disabled={isLoading}
+                    />
+                  </div>
+                  {errors.identifier && (
+                    <p className="text-sm text-destructive">{errors.identifier}</p>
+                  )}
                 </div>
-                {errors.email && (
-                  <p className="text-sm text-destructive">{errors.email}</p>
-                )}
-              </div>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        className={`pl-10 h-12 ${errors.email ? "border-destructive" : ""}`}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={isLoading}
+                      />
+                    </div>
+                    {errors.email && (
+                      <p className="text-sm text-destructive">{errors.email}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="displayName">Display Name</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                      <Input
+                        id="displayName"
+                        type="text"
+                        placeholder="Your display name"
+                        className={`pl-10 h-12 ${errors.displayName ? "border-destructive" : ""}`}
+                        value={displayName}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                        disabled={isLoading}
+                      />
+                    </div>
+                    {errors.displayName && (
+                      <p className="text-sm text-destructive">{errors.displayName}</p>
+                    )}
+                  </div>
+                </>
+              )}
 
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>

@@ -1,39 +1,15 @@
-import { Search, Shield, FileText, Users, AlertTriangle } from "lucide-react";
+import { Search, FileText, Users, AlertTriangle, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
+import AppHeader from "@/components/AppHeader";
 
 const Index = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Shield className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold text-foreground">BadVendor</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
-              How It Works
-            </a>
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-              About
-            </a>
-            <Button variant="outline" onClick={() => navigate("/auth")}>
-              Sign In
-            </Button>
-            <Button onClick={() => navigate("/report")}>
-              Report a Vendor
-            </Button>
-          </nav>
-          <Button variant="outline" size="icon" className="md:hidden">
-            <Search className="h-5 w-5" />
-          </Button>
-        </div>
-      </header>
+      <AppHeader />
 
       {/* Hero Section with animated background */}
       <HeroSection />
