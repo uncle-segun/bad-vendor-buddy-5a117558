@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import { sanitizePostgrestQuery, isValidSearchQuery } from "@/lib/sanitizeQuery";
 
 type Vendor = Tables<"vendors">;
 
@@ -49,12 +50,27 @@ const Search = () => {
     setHasSearched(true);
 
     try {
+      // Validate and sanitize the search query to prevent injection
+      if (!isValidSearchQuery(query)) {
+        console.warn("Invalid search query detected");
+        setResults([]);
+        return;
+      }
+      
+      const sanitizedQuery = sanitizePostgrestQuery(query);
+      
+      if (!sanitizedQuery) {
+        setResults([]);
+        return;
+      }
+
       // Search public vendors by name, phone, or bank account
+      // Using sanitized query to prevent PostgREST filter injection
       const { data, error } = await supabase
         .from("vendors")
         .select("*")
         .eq("is_public", true)
-        .or(`name.ilike.%${query}%,phone_numbers.cs.{${query}}`)
+        .or(`name.ilike.%${sanitizedQuery}%,phone_numbers.cs.{${sanitizedQuery}}`)
         .limit(20);
 
       if (error) throw error;

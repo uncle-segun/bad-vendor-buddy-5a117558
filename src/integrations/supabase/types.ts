@@ -108,6 +108,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "complaints_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_moderation_view"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "complaints_vendor_id_fkey"
             columns: ["vendor_id"]
             isOneToOne: false
@@ -262,7 +269,27 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      profiles_moderation_view: {
+        Row: {
+          created_at: string | null
+          display_name: string | null
+          id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_name?: string | null
+          id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          display_name?: string | null
+          id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_current_profile_id: { Args: never; Returns: string }
