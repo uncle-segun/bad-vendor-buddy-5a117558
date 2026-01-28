@@ -117,7 +117,7 @@ export const HeroSection = () => {
           <form onSubmit={handleSearch} className="max-w-2xl mx-auto px-2">
             <div className="relative">
               <div 
-                className="flex flex-col gap-3 p-3 sm:p-2 rounded-2xl sm:rounded-full bg-card border border-border"
+                className="flex flex-col sm:flex-row gap-3 p-3 sm:p-2 rounded-2xl sm:rounded-full bg-card border border-border"
                 style={{
                   boxShadow: `0 4px 20px hsl(var(--primary) / 0.1), inset 0 0 0 1px hsl(var(--border))`,
                 }}
