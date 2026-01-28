@@ -222,6 +222,7 @@ export type Database = {
         Row: {
           bank_accounts: Json | null
           created_at: string
+          created_by: string | null
           email_addresses: string[] | null
           first_complaint_date: string | null
           highest_severity: Database["public"]["Enums"]["severity_level"] | null
@@ -236,6 +237,7 @@ export type Database = {
         Insert: {
           bank_accounts?: Json | null
           created_at?: string
+          created_by?: string | null
           email_addresses?: string[] | null
           first_complaint_date?: string | null
           highest_severity?:
@@ -252,6 +254,7 @@ export type Database = {
         Update: {
           bank_accounts?: Json | null
           created_at?: string
+          created_by?: string | null
           email_addresses?: string[] | null
           first_complaint_date?: string | null
           highest_severity?:

@@ -250,6 +250,7 @@ const Report = () => {
           email_addresses: emailArray.length > 0 ? emailArray : null,
           bank_accounts: bankAccounts,
           social_handles: Object.keys(socialHandles).length > 0 ? socialHandles : null,
+          created_by: user.id,
         })
         .select()
         .single();
