@@ -62,11 +62,12 @@ serve(async (req) => {
       );
     }
 
-    // Generate unique filename
+    // Generate unique filename - preserve extension from uploaded file
+    // Generate unique filename - preserve extension from uploaded file
     const timestamp = Date.now();
-    const randomSuffix = Math.random().toString(36).substring(2, 8);
-    const ext = file.name.split(".").pop() || "webp";
-    const fileName = `${complaintId}/${timestamp}-${randomSuffix}.${ext}`;
+    const ext = file.name.split(".").pop()?.toLowerCase() || "webp";
+    // Use simple timestamp-based naming for consistency
+    const fileName = `${complaintId}/${timestamp}.${ext}`;
 
     const arrayBuffer = await file.arrayBuffer();
 
@@ -156,7 +157,7 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Successfully uploaded ${fileName} to R2 bucket ${tempBucket}`);
+    console.log(`Successfully uploaded ${fileName} to R2 bucket ${tempBucket} for complaint ${complaintId}`);
 
     return new Response(
       JSON.stringify({

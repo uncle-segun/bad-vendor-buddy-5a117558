@@ -41,17 +41,25 @@ const EvidenceItem = ({ file }: EvidenceItemProps) => {
     try {
       // Get signed URL from R2
       const bucket = isInPermanentStorage ? 'permanent' : 'temp';
-      const url = await getR2SignedUrl(file.file_url, bucket);
+      
+      // Try the stored file path first
+      let url = await getR2SignedUrl(file.file_url, bucket);
+      
+      // If file not found, try with .webp extension (in case of conversion)
+      if (!url && !file.file_url.endsWith('.webp')) {
+        const webpPath = file.file_url.replace(/\.[^.]+$/, '.webp');
+        url = await getR2SignedUrl(webpPath, bucket);
+      }
       
       if (url) {
         setSignedUrl(url);
         window.open(url, '_blank', 'noopener,noreferrer');
       } else {
-        setError('Failed to access file');
+        setError('File not found');
       }
     } catch (err) {
       console.error('Error accessing evidence file:', err);
-      setError('Failed to access file');
+      setError('Access error');
     } finally {
       setIsLoading(false);
     }
