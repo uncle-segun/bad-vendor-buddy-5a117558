@@ -121,6 +121,13 @@ export type Database = {
             referencedRelation: "vendors"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "complaints_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public_view"
+            referencedColumns: ["id"]
+          },
         ]
       }
       evidence: {
@@ -293,8 +300,58 @@ export type Database = {
         }
         Relationships: []
       }
+      vendors_public_view: {
+        Row: {
+          created_at: string | null
+          email_addresses: string[] | null
+          first_complaint_date: string | null
+          highest_severity: Database["public"]["Enums"]["severity_level"] | null
+          id: string | null
+          is_public: boolean | null
+          name: string | null
+          phone_numbers: string[] | null
+          social_handles: Json | null
+          updated_at: string | null
+          verified_complaint_count: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          email_addresses?: string[] | null
+          first_complaint_date?: string | null
+          highest_severity?:
+            | Database["public"]["Enums"]["severity_level"]
+            | null
+          id?: string | null
+          is_public?: boolean | null
+          name?: string | null
+          phone_numbers?: string[] | null
+          social_handles?: Json | null
+          updated_at?: string | null
+          verified_complaint_count?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          email_addresses?: string[] | null
+          first_complaint_date?: string | null
+          highest_severity?:
+            | Database["public"]["Enums"]["severity_level"]
+            | null
+          id?: string | null
+          is_public?: boolean | null
+          name?: string | null
+          phone_numbers?: string[] | null
+          social_handles?: Json | null
+          updated_at?: string | null
+          verified_complaint_count?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      can_access_evidence_file: {
+        Args: { _file_path: string }
+        Returns: boolean
+      }
       get_current_profile_id: { Args: never; Returns: string }
       has_role: {
         Args: {
