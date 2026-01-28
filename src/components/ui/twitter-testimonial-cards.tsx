@@ -208,7 +208,7 @@ export default function Testimonials({ cards }: TestimonialsProps) {
   const displayCards = cards || defaultCards;
 
   return (
-    <div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-fade-in">
+    <div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-fade-in mx-auto">
       {displayCards.map((cardProps, index) => (
         <TestimonialCard
           key={index}

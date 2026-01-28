@@ -114,10 +114,10 @@ export const HeroSection = () => {
           </p>
 
           {/* Search Form */}
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+          <form onSubmit={handleSearch} className="max-w-2xl mx-auto px-2">
             <div className="relative">
               <div 
-                className="flex flex-col sm:flex-row gap-3 p-2 rounded-full bg-card border border-border"
+                className="flex flex-col gap-3 p-3 sm:p-2 rounded-2xl sm:rounded-full bg-card border border-border"
                 style={{
                   boxShadow: `0 4px 20px hsl(var(--primary) / 0.1), inset 0 0 0 1px hsl(var(--border))`,
                 }}
@@ -126,13 +126,13 @@ export const HeroSection = () => {
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
                     type="text"
-                    placeholder="Search by phone number, bank account number or social handle..."
+                    placeholder="Search phone, bank account or handle..."
                     className="pl-12 h-12 text-base bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <Button type="submit" size="lg" className="h-12 px-8 rounded-full">
+                <Button type="submit" size="lg" className="h-12 px-8 rounded-full w-full sm:w-auto">
                   Search Vendor
                 </Button>
               </div>
