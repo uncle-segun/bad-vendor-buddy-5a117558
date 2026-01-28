@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Shield, ArrowLeft } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const DisputeTerms = () => {
   const navigate = useNavigate();
@@ -170,6 +171,8 @@ const DisputeTerms = () => {
           </p>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };

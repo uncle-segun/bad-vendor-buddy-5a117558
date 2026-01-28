@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { uploadToR2 } from "@/lib/r2Storage";
 import { processFileForUpload } from "@/lib/imageUtils";
+import Footer from "@/components/Footer";
 import { z } from "zod";
 
 const vendorSchema = z.object({
@@ -772,6 +773,8 @@ const Report = () => {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };

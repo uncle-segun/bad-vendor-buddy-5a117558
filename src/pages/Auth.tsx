@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import Footer from "@/components/Footer";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -307,6 +308,8 @@ const Auth = () => {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };

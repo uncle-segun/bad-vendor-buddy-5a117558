@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import Footer from "@/components/Footer";
 
 type Complaint = Tables<"complaints">;
 type Vendor = Tables<"vendors">;
@@ -229,6 +230,8 @@ const Dashboard = () => {
           )}
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };

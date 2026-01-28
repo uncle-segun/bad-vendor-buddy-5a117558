@@ -16,6 +16,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import Footer from "@/components/Footer";
 
 interface EvidenceFile {
   file: File;
@@ -574,6 +575,8 @@ const Dispute = () => {
           </form>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };
