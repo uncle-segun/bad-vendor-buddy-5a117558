@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Shield, Search, User, LogOut, FileText, LayoutDashboard, Menu, X } from "lucide-react";
+import { User, LogOut, FileText, LayoutDashboard, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import logoFull from "@/assets/logo-full.png";
 
 const AppHeader = () => {
   const navigate = useNavigate();
@@ -26,9 +27,8 @@ const AppHeader = () => {
   return (
     <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <Shield className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-foreground">BadVendor</span>
+        <Link to="/" className="flex items-center">
+          <img src={logoFull} alt="BadVendors.com - Verify Before You Pay" className="h-10 md:h-12" />
         </Link>
         
         {/* Desktop Navigation */}

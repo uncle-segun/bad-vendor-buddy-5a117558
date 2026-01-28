@@ -1,10 +1,11 @@
-import { Search, FileText, Users, AlertTriangle, Shield } from "lucide-react";
+import { Search, FileText, Users, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
 import AppHeader from "@/components/AppHeader";
 import { Testimonials } from "@/components/ui/twitter-testimonial-cards";
 import { GlowCard } from "@/components/ui/spotlight-card";
+import logoIcon from "@/assets/logo-icon.png";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -214,9 +215,9 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Shield className="h-6 w-6" />
-                <span className="text-lg font-bold">BadVendor</span>
+              <div className="flex items-center gap-3 mb-4">
+                <img src={logoIcon} alt="BadVendors" className="h-10 w-10 rounded" />
+                <span className="text-lg font-bold">BadVendors</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 Nigeria's verified misconduct registry. Protecting consumers 
