@@ -57,7 +57,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">3. Protect Others</h3>
               <p className="text-muted-foreground">
-                Once 3+ complaints are verified, the vendor is listed publicly—helping 
+                Once 3+ complaints are verified, the vendor is listed publicly, helping 
                 other Nigerians avoid the same fate.
               </p>
             </div>
