@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Shield, ArrowLeft } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const Terms = () => {
   const navigate = useNavigate();
@@ -171,6 +172,8 @@ const Terms = () => {
           </p>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };

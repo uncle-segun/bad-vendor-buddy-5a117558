@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 import { sanitizePostgrestQuery, isValidSearchQuery } from "@/lib/sanitizeQuery";
+import Footer from "@/components/Footer";
 
 type Vendor = Tables<"vendors">;
 
@@ -253,6 +254,8 @@ const Search = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

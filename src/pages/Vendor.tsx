@@ -4,6 +4,7 @@ import { Shield, AlertTriangle, ArrowLeft, Phone, Mail, Building, Calendar, File
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import Footer from "@/components/Footer";
 
 type Vendor = Tables<"vendors">;
 type Complaint = Tables<"complaints">;
@@ -335,6 +336,8 @@ const Vendor = () => {
           </Button>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

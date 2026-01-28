@@ -4,6 +4,7 @@ import {
   Shield, FileText, Clock, CheckCircle, XCircle, AlertCircle, 
   Eye, ChevronDown, Filter, LogOut, Users, BarChart3
 } from "lucide-react";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { 
@@ -509,6 +510,8 @@ const ModeratorDashboard = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      <Footer />
     </div>
   );
 };
