@@ -153,8 +153,10 @@ const Index = () => {
               Hear from people who've been affected by vendor fraud—and how BadVendor is helping protect others.
             </p>
           </div>
-          <div className="flex justify-center">
-            <Testimonials />
+          <div className="flex justify-center items-center w-full">
+            <div className="flex justify-center">
+              <Testimonials />
+            </div>
           </div>
         </div>
       </section>
