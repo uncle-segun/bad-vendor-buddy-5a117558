@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FileText, Loader2, AlertCircle, ExternalLink } from 'lucide-react';
-import { getSignedUrl, extractFilePath } from '@/hooks/useSignedUrl';
+import { getR2SignedUrl } from '@/lib/r2Storage';
 
 interface Evidence {
   id: string;
   file_url: string;
   file_name: string;
   file_type: string;
+  description?: string | null;
 }
 
 interface EvidenceViewerProps {
@@ -22,6 +23,9 @@ const EvidenceItem = ({ file }: EvidenceItemProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Determine if the file is in permanent storage based on description
+  const isInPermanentStorage = file.description?.includes('[storage:permanent]') ?? false;
+
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     
@@ -35,11 +39,9 @@ const EvidenceItem = ({ file }: EvidenceItemProps) => {
     setError(null);
 
     try {
-      // Extract the file path from the stored value
-      const filePath = extractFilePath(file.file_url, 'evidence');
-      
-      // Generate a signed URL that expires in 1 hour
-      const url = await getSignedUrl('evidence', filePath, 3600);
+      // Get signed URL from R2
+      const bucket = isInPermanentStorage ? 'permanent' : 'temp';
+      const url = await getR2SignedUrl(file.file_url, bucket);
       
       if (url) {
         setSignedUrl(url);

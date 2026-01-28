@@ -26,6 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 import { EvidenceViewer } from "@/components/EvidenceViewer";
+import { processEvidence } from "@/lib/r2Storage";
 
 type Complaint = Tables<"complaints">;
 type Vendor = Tables<"vendors">;
@@ -170,6 +171,17 @@ const ModeratorDashboard = () => {
     setIsSubmitting(true);
 
     try {
+      // If approving or rejecting, process the evidence files in R2
+      if (newStatus === "approved" || newStatus === "rejected") {
+        const action = newStatus === "approved" ? "approve" : "reject";
+        const evidenceResult = await processEvidence(selectedComplaint.id, action);
+        
+        if (!evidenceResult.success) {
+          console.error("Evidence processing error:", evidenceResult.error);
+          // Continue with status update even if evidence processing fails
+        }
+      }
+
       const { error } = await supabase
         .from("complaints")
         .update({
@@ -189,9 +201,15 @@ const ModeratorDashboard = () => {
           : c
       ));
 
+      const evidenceMessage = newStatus === "approved" 
+        ? " Evidence has been moved to permanent storage." 
+        : newStatus === "rejected" 
+          ? " Evidence will be automatically deleted after 7 days." 
+          : "";
+
       toast({
         title: "Status updated",
-        description: `Complaint has been ${newStatus === "approved" ? "approved" : newStatus === "rejected" ? "rejected" : "updated"}.`,
+        description: `Complaint has been ${newStatus === "approved" ? "approved" : newStatus === "rejected" ? "rejected" : "updated"}.${evidenceMessage}`,
       });
 
       setSelectedComplaint(null);

@@ -13,6 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { uploadToR2 } from "@/lib/r2Storage";
+import { processFileForUpload } from "@/lib/imageUtils";
 import { z } from "zod";
 
 const vendorSchema = z.object({
@@ -275,28 +277,25 @@ const Report = () => {
 
       if (complaintError) throw complaintError;
 
-      // Upload evidence files
+      // Upload evidence files to R2
       for (const evidenceFile of evidenceFiles) {
-        const fileExt = evidenceFile.file.name.split(".").pop();
-        const fileName = `${complaint.id}/${Date.now()}.${fileExt}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from("evidence")
-          .upload(fileName, evidenceFile.file);
-
-        if (uploadError) {
-          console.error("Evidence upload error:", uploadError);
+        // Process file (converts images to WebP)
+        const { blob, fileName: processedName, mimeType } = await processFileForUpload(evidenceFile.file);
+        
+        const uploadResult = await uploadToR2(evidenceFile.file, complaint.id);
+        
+        if (!uploadResult.success) {
+          console.error("Evidence upload error:", uploadResult.error);
           continue;
         }
 
-        // Store only the file path, not a public URL
-        // Signed URLs will be generated on-demand when viewing evidence
+        // Store the R2 file path in the database
         await supabase.from("evidence").insert({
           complaint_id: complaint.id,
-          file_url: fileName, // Store the path, not the public URL
-          file_name: evidenceFile.file.name,
-          file_type: evidenceFile.file.type,
-          file_size: evidenceFile.file.size,
+          file_url: uploadResult.filePath!, // R2 file path
+          file_name: processedName, // WebP filename
+          file_type: mimeType, // Updated mime type
+          file_size: blob.size,
         });
       }
 
