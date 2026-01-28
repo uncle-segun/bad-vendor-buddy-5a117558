@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
 import AppHeader from "@/components/AppHeader";
+import { Testimonials } from "@/components/ui/twitter-testimonial-cards";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -134,8 +135,25 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 bg-card border-y border-border overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Real Stories from Real Nigerians
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Hear from people who've been affected by vendor fraud—and how BadVendor is helping protect others.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <Testimonials />
+          </div>
+        </div>
+      </section>
+
       {/* Trust Indicators */}
-      <section className="py-20 bg-card border-y border-border">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
