@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { Search, Shield } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Typewriter } from "@/components/ui/typewriter"
 
 export const HeroSection = () => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -96,8 +97,14 @@ export const HeroSection = () => {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">
-            Check Before You Pay.{" "}
-            <span className="text-primary">Protect Yourself.</span>
+            <Typewriter
+              words={["Check Before You Pay.", "Protect Yourself."]}
+              speed={80}
+              delayBetweenWords={2500}
+              cursor={true}
+              cursorChar="|"
+              className="text-primary"
+            />
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-10 text-balance">
