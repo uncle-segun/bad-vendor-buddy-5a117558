@@ -130,6 +130,119 @@ export type Database = {
           },
         ]
       }
+      dispute_evidence: {
+        Row: {
+          description: string | null
+          dispute_id: string
+          file_name: string
+          file_size: number | null
+          file_type: string
+          file_url: string
+          id: string
+          uploaded_at: string
+        }
+        Insert: {
+          description?: string | null
+          dispute_id: string
+          file_name: string
+          file_size?: number | null
+          file_type: string
+          file_url: string
+          id?: string
+          uploaded_at?: string
+        }
+        Update: {
+          description?: string | null
+          dispute_id?: string
+          file_name?: string
+          file_size?: number | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dispute_evidence_dispute_id_fkey"
+            columns: ["dispute_id"]
+            isOneToOne: false
+            referencedRelation: "dispute_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dispute_requests: {
+        Row: {
+          email: string
+          full_name: string
+          id: string
+          id_document_type: string
+          id_document_url: string
+          phone_number: string
+          reason: string
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["dispute_status"]
+          submitted_at: string
+          terms_accepted: boolean
+          terms_accepted_at: string | null
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          email: string
+          full_name: string
+          id?: string
+          id_document_type: string
+          id_document_url: string
+          phone_number: string
+          reason: string
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["dispute_status"]
+          submitted_at?: string
+          terms_accepted?: boolean
+          terms_accepted_at?: string | null
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          email?: string
+          full_name?: string
+          id?: string
+          id_document_type?: string
+          id_document_url?: string
+          phone_number?: string
+          reason?: string
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["dispute_status"]
+          submitted_at?: string
+          terms_accepted?: boolean
+          terms_accepted_at?: string | null
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dispute_requests_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dispute_requests_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public_view"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       evidence: {
         Row: {
           complaint_id: string
@@ -375,6 +488,7 @@ export type Database = {
         | "approved"
         | "rejected"
         | "needs_evidence"
+      dispute_status: "submitted" | "under_review" | "approved" | "rejected"
       severity_level: "critical" | "risky" | "unreliable"
     }
     CompositeTypes: {
@@ -511,6 +625,7 @@ export const Constants = {
         "rejected",
         "needs_evidence",
       ],
+      dispute_status: ["submitted", "under_review", "approved", "rejected"],
       severity_level: ["critical", "risky", "unreliable"],
     },
   },
