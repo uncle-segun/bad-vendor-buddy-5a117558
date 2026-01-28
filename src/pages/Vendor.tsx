@@ -318,6 +318,23 @@ const Vendor = () => {
           </Button>
         </div>
       </section>
+
+      {/* Dispute Section */}
+      <section className="py-8 bg-muted/30 border-t border-border">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm text-muted-foreground mb-4">
+            Are you the owner of this listing? If you believe this listing is incorrect, 
+            you can submit a dispute request for review.
+          </p>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => navigate(`/dispute?vendor=${id}`)}
+          >
+            Dispute This Listing
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };

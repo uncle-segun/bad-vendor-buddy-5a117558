@@ -11,6 +11,9 @@ import Vendor from "./pages/Vendor";
 import Report from "./pages/Report";
 import Dashboard from "./pages/Dashboard";
 import ModeratorDashboard from "./pages/ModeratorDashboard";
+import Dispute from "./pages/Dispute";
+import Terms from "./pages/Terms";
+import DisputeTerms from "./pages/DisputeTerms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +33,9 @@ const App = () => (
             <Route path="/report" element={<Report />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/moderator" element={<ModeratorDashboard />} />
+            <Route path="/dispute" element={<Dispute />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/dispute-terms" element={<DisputeTerms />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

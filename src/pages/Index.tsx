@@ -234,17 +234,17 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Resources</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-background transition-colors">How It Works</a></li>
-                <li><a href="#" className="hover:text-background transition-colors">FAQs</a></li>
+                <li><a href="#how-it-works" className="hover:text-background transition-colors">How It Works</a></li>
+                <li><a href="/dispute" className="hover:text-background transition-colors">Dispute a Listing</a></li>
                 <li><a href="#" className="hover:text-background transition-colors">Contact Us</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="/terms" className="hover:text-background transition-colors">Terms of Service</a></li>
+                <li><a href="/dispute-terms" className="hover:text-background transition-colors">Dispute Terms</a></li>
                 <li><a href="#" className="hover:text-background transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-background transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-background transition-colors">Report Guidelines</a></li>
               </ul>
             </div>
           </div>
