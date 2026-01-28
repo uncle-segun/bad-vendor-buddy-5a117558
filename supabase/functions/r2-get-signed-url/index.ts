@@ -45,6 +45,27 @@ serve(async (req) => {
       );
     }
 
+    // Validate access permissions using the database function
+    const { data: hasAccess, error: accessError } = await supabase.rpc('can_access_evidence_file', {
+      _file_path: filePath
+    });
+
+    if (accessError) {
+      console.error("Error checking access:", accessError);
+      return new Response(
+        JSON.stringify({ error: "Access check failed" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (!hasAccess) {
+      console.log(`Access denied for user ${user.id} to file ${filePath}`);
+      return new Response(
+        JSON.stringify({ error: "Access denied" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // Get R2 configuration
     const accountId = Deno.env.get("CLOUDFLARE_ACCOUNT_ID");
     const accessKeyId = Deno.env.get("R2_ACCESS_KEY_ID");
@@ -121,7 +142,7 @@ serve(async (req) => {
     
     const signedUrl = `${endpoint}${canonicalUri}?${queryParams.toString()}`;
 
-    console.log(`Generated signed URL for ${filePath} in bucket ${bucketName}`);
+    console.log(`Generated signed URL for ${filePath} in bucket ${bucketName} for user ${user.id}`);
 
     return new Response(
       JSON.stringify({ signedUrl, expiresIn }),
