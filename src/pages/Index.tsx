@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
 import AppHeader from "@/components/AppHeader";
 import { Testimonials } from "@/components/ui/twitter-testimonial-cards";
+import { GlowCard } from "@/components/ui/spotlight-card";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -78,59 +79,65 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <div className="border border-severity-critical/30 bg-severity-critical/5 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-severity-critical rounded-lg flex items-center justify-center">
-                  <AlertTriangle className="h-5 w-5 text-severity-critical-foreground" />
+            <GlowCard glowColor="red" customSize className="h-auto aspect-auto">
+              <div className="flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-severity-critical rounded-lg flex items-center justify-center">
+                    <AlertTriangle className="h-5 w-5 text-severity-critical-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground">Critical</h3>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Critical</h3>
+                <p className="text-muted-foreground mb-4">
+                  Severe cases involving significant financial loss, identity theft, or 
+                  criminal activity. High risk of harm.
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>• Money taken, no goods/services</li>
+                  <li>• Identity theft or fraud</li>
+                  <li>• Fake products with safety risks</li>
+                </ul>
               </div>
-              <p className="text-muted-foreground mb-4">
-                Severe cases involving significant financial loss, identity theft, or 
-                criminal activity. High risk of harm.
-              </p>
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li>• Money taken, no goods/services</li>
-                <li>• Identity theft or fraud</li>
-                <li>• Fake products with safety risks</li>
-              </ul>
-            </div>
+            </GlowCard>
 
-            <div className="border border-severity-risky/30 bg-severity-risky/5 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-severity-risky rounded-lg flex items-center justify-center">
-                  <AlertTriangle className="h-5 w-5 text-severity-risky-foreground" />
+            <GlowCard glowColor="orange" customSize className="h-auto aspect-auto">
+              <div className="flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-severity-risky rounded-lg flex items-center justify-center">
+                    <AlertTriangle className="h-5 w-5 text-severity-risky-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground">Risky</h3>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Risky</h3>
+                <p className="text-muted-foreground mb-4">
+                  Serious issues with partial delivery or significant deception. 
+                  Exercise caution if transacting.
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>• Partial delivery of goods</li>
+                  <li>• Significantly misrepresented items</li>
+                  <li>• Unresponsive after payment</li>
+                </ul>
               </div>
-              <p className="text-muted-foreground mb-4">
-                Serious issues with partial delivery or significant deception. 
-                Exercise caution if transacting.
-              </p>
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li>• Partial delivery of goods</li>
-                <li>• Significantly misrepresented items</li>
-                <li>• Unresponsive after payment</li>
-              </ul>
-            </div>
+            </GlowCard>
 
-            <div className="border border-severity-unreliable/30 bg-severity-unreliable/5 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-severity-unreliable rounded-lg flex items-center justify-center">
-                  <AlertTriangle className="h-5 w-5 text-severity-unreliable-foreground" />
+            <GlowCard glowColor="blue" customSize className="h-auto aspect-auto">
+              <div className="flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-severity-unreliable rounded-lg flex items-center justify-center">
+                    <AlertTriangle className="h-5 w-5 text-severity-unreliable-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground">Unreliable</h3>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Unreliable</h3>
+                <p className="text-muted-foreground mb-4">
+                  Pattern of poor service or minor issues. May be acceptable for 
+                  low-risk transactions.
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>• Excessive delays</li>
+                  <li>• Minor quality issues</li>
+                  <li>• Poor communication</li>
+                </ul>
               </div>
-              <p className="text-muted-foreground mb-4">
-                Pattern of poor service or minor issues. May be acceptable for 
-                low-risk transactions.
-              </p>
-              <ul className="text-sm text-muted-foreground space-y-2">
-                <li>• Excessive delays</li>
-                <li>• Minor quality issues</li>
-                <li>• Poor communication</li>
-              </ul>
-            </div>
+            </GlowCard>
           </div>
         </div>
       </section>
