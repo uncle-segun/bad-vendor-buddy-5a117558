@@ -96,11 +96,12 @@ export const HeroSection = () => {
             Protecting Nigerian Consumers
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
+            <span className="text-foreground">Check Before You Pay.</span>{" "}
             <Typewriter
-              words={["Check Before You Pay.", "Protect Yourself."]}
+              words={["Protect Yourself."]}
               speed={80}
-              delayBetweenWords={2500}
+              delayBetweenWords={3000}
               cursor={true}
               cursorChar="|"
               className="text-primary"
